@@ -11,7 +11,7 @@ const Article = () => {
 		});
 	}, []);
 	return (
-		<ul>
+		<ul className='articles'>
 			{articles.map((article) => {
 				return (
 					<li className='article-card' key={article.article_id}>
