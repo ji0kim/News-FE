@@ -8,9 +8,11 @@ function App() {
 		<div className='App'>
 			<Header>NC News</Header>
 			<Topics></Topics>
-			<Routes>
-				<Route path='/' element={<Home />}></Route>
-			</Routes>
+			<main>
+				<Routes>
+					<Route path='/' element={<Home />}></Route>
+				</Routes>
+			</main>
 		</div>
 	);
 }
