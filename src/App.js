@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Home from './components/Home.jsx';
+import { Routes, Route } from 'react-router-dom';
+import Articles from './components/Articles.jsx';
 import Header from './components/Header.jsx';
 import Topics from './components/Topics.jsx';
 
@@ -11,9 +11,9 @@ function App() {
 			<Topics></Topics>
 			<main>
 				<Routes>
-					<Route path='/' element={<Home />}></Route>
-					<Route path='/articles' element={<Home />}></Route>
-					<Route path='/articles/:topic' element={<Home />}></Route>
+					<Route path='/' element={<Articles />}></Route>
+					<Route path='/articles' element={<Articles />}></Route>
+					<Route path='/articles/:topic' element={<Articles />}></Route>
 				</Routes>
 			</main>
 		</div>
