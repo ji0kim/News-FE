@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import ArticleCard from './ArticleCard';
-import { getArticles } from '../utils/api';
+import { getArticlesByTopics } from '../utils/api';
+import { useParams } from 'react-router-dom';
 
 const Article = () => {
 	const [articles, setArticles] = useState([]);
+	const { topic } = useParams();
 
 	useEffect(() => {
-		getArticles().then((articlesFromApi) => {
+		getArticlesByTopics(topic).then((articlesFromApi) => {
 			setArticles(articlesFromApi);
 		});
-	}, []);
+	}, [topic]);
 	return (
 		<ul className='articles'>
 			{articles.map((article) => {
