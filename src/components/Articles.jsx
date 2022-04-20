@@ -4,15 +4,20 @@ import { getArticlesByTopics } from '../utils/api';
 import { useParams } from 'react-router-dom';
 
 const Articles = () => {
-	const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	const { topic } = useParams();
 
 	useEffect(() => {
 		getArticlesByTopics(topic).then((articlesFromApi) => {
-			setArticles(articlesFromApi);
+      setArticles(articlesFromApi);
+			setIsLoading(false);
 		});
 	}, [topic]);
 
+  if (isLoading) {
+		return <p>Loading</p>;
+	}
 	return (
 		<ul className='articles'>
 			{articles.map((article) => {
