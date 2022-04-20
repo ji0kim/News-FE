@@ -3,7 +3,7 @@ import ArticleCard from './ArticleCard';
 import { getArticlesByTopics } from '../utils/api';
 import { useParams } from 'react-router-dom';
 
-const Article = () => {
+const Articles = () => {
 	const [articles, setArticles] = useState([]);
 	const { topic } = useParams();
 
@@ -12,6 +12,7 @@ const Article = () => {
 			setArticles(articlesFromApi);
 		});
 	}, [topic]);
+
 	return (
 		<ul className='articles'>
 			{articles.map((article) => {
@@ -24,4 +25,4 @@ const Article = () => {
 		</ul>
 	);
 };
-export default Article;
+export default Articles;
