@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
+
 const Header = () => {
-	return <h1>NC news</h1>;
+	return <Link to='/'>NC news</Link>;
 };
 export default Header;
