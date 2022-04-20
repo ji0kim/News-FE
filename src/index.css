@@ -83,6 +83,15 @@ main{
   text-align: left;
   width: 80%;
 }
+@media (max-width: 768px ){
+  main{
+    padding: 1em;
+  }
+  .article-page{
+    text-align: left;
+    width: 100%;
+  }
+}
 
 .article-page__title {
   font-family: 'Merriweather', serif;
@@ -111,12 +120,13 @@ main{
   color: #FFF;
   background: #8b8b8b;
   padding: 0.15em 0.5em;
+  margin: 1em 0;
   border-radius: 1em;
 }
 .article-page__date{
   display: inline-block;
   color: #999999;
-  margin-left: 1em;
+  margin: 1em 0;
 }
 .article-page__body{
  margin: 1em 0; 
