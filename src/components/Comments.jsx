@@ -28,6 +28,7 @@ const Comments = ({ article_id }) => {
 		addCommentToArticle(article_id, newComment).catch((err) => {
 			console.log(err.response.data.msg);
 		});
+    setNewComment({ author: user, body: '' });
 	};
 
 	useEffect(() => {
