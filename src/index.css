@@ -131,3 +131,10 @@ main{
 .article-page__body{
  margin: 1em 0; 
 }
+
+.btn-voted {
+ background-color: #ffc107; 
+}
+.vote .btn {
+ background-color: #444444; 
+}
