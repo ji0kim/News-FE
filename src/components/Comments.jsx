@@ -14,7 +14,10 @@ const Comments = ({ article_id }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		if (newComment.body.length <= 0) return;
+
 		const date = new Date(Date.now()).toISOString();
+
 		setComments((currComments) => {
 			const commentToAdd = { ...newComment };
 			commentToAdd.created_at = date;
@@ -22,7 +25,9 @@ const Comments = ({ article_id }) => {
 			commentToAdd.votes = 0;
 			return [commentToAdd, ...currComments];
 		});
-		addCommentToArticle(article_id, newComment);
+		addCommentToArticle(article_id, newComment).catch((err) => {
+			console.log(err.response.data.msg);
+		});
 	};
 
 	useEffect(() => {
@@ -65,5 +70,5 @@ const Comments = ({ article_id }) => {
 			</form>
 		</section>
 	);
-};;;
+};
 export default Comments;
