@@ -1,6 +1,19 @@
+import { useState } from 'react';
+import { UserContext } from '../App';
 import { formatDate } from '../utils/utils';
+import { addCommentToArticle } from '../utils/api';
 import '../css/comments.css';
-const Comments = ({ comments }) => {
+const Comments = ({ comments, article_id }) => {
+	const user = UserContext._currentValue;
+	const [newComment, setNewComment] = useState('');
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		setNewComment;
+		addCommentToArticle(article_id, newComment, user).then(({ data }) => {
+			console.log(data);
+		});
+	};
 	return (
 		<section className='comments'>
 			<h2 className='section-tit'>
@@ -18,6 +31,10 @@ const Comments = ({ comments }) => {
 					);
 				})}
 			</ul>
+			<form onSubmit={handleSubmit}>
+				<textarea name='' id='' cols='30' rows='10' value={newComment} onChange={(event) => setNewComment(event.target.value)}></textarea>
+				<button type='submit'>Add</button>
+			</form>
 		</section>
 	);
 };

@@ -64,7 +64,7 @@ const Article = () => {
 				</button>
 				<span className='article-page__votes'>{vote + voteClickNum}</span>
 			</section>
-			<Comments comments={comments}></Comments>
+			<Comments comments={comments} article_id={article.article_id}></Comments>
 		</>
 	);
 };
