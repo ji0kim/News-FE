@@ -29,3 +29,9 @@ export const getArticleById = (article_id) => {
 export const patchIncDecVote = (article_id, voteClickNum) => {
 	return articlesApi.patch(`/articles/${article_id}`, { inc_votes: voteClickNum });
 };
+
+export const getCommentsById = (article_id) => {
+	return articlesApi.get(`/articles/${article_id}/comments`).then(({ data }) => {
+		return data.comments;
+	});
+};
