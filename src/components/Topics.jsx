@@ -16,7 +16,7 @@ const Topics = () => {
 			{topics.map(({ slug }) => {
 				return (
 					<li key={slug}>
-						<Link to={`/articles/${slug}`}>{slug}</Link>
+						<Link to={`/topics/${slug}`}>{slug}</Link>
 					</li>
 				);
 			})}
