@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticleById, patchIncDecVote } from '../utils/api';
+import { getArticleById, patchIncDecVote, getCommentsById } from '../utils/api';
+import { formatDate } from '../utils/utils';
 import '../index.css';
+import Comments from './Comments';
 
 const Article = () => {
 	const [article, setArticle] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 	const [vote, setVote] = useState(0);
 	const [voteClickNum, setVoteClickNum] = useState(0);
+	const [comments, setComments] = useState([]);
 
 	const { article_id } = useParams();
 
@@ -35,6 +38,12 @@ const Article = () => {
 			});
 	}, []);
 
+	useEffect(() => {
+		getCommentsById(article_id).then((commentsFromApi) => {
+			setComments(commentsFromApi);
+		});
+	}, []);
+
 	if (isLoading) {
 		return <p>Loading</p>;
 	}
@@ -45,7 +54,7 @@ const Article = () => {
 				<p className='article-page__author'>
 					<span>by</span> {article.author}
 				</p>
-				<span className='article-page__date'>{article.created_at}</span>
+				<span className='article-page__date'>{formatDate(article.created_at)}</span>
 				<p>{article.body}</p>
 				<span className='article-page__topic'>{article.topic}</span>
 			</section>
@@ -53,8 +62,9 @@ const Article = () => {
 				<button onClick={() => handleVote(article.article_id)} className={voteClickNum > 0 ? ' btn-voted' : 'btn'}>
 					+
 				</button>
-				<p className='article-page__votes'>{vote + voteClickNum}</p>
+				<span className='article-page__votes'>{vote + voteClickNum}</span>
 			</section>
+			<Comments comments={comments}></Comments>
 		</>
 	);
 };
