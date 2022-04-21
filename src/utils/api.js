@@ -36,11 +36,11 @@ export const getCommentsById = (article_id) => {
 	});
 };
 
-export const addCommentToArticle = (article_id, newComment, user) => {
+export const addCommentToArticle = (article_id, newComment) => {
 	return articlesApi
 		.post(`/articles/${article_id}/comments`, {
-			username: user,
-			body: newComment,
+			username: newComment.author,
+			body: newComment.body,
 		})
 		.then(({ data }) => {
 			console.log(data);

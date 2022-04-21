@@ -5,21 +5,37 @@ import { addCommentToArticle, getCommentsById } from '../utils/api';
 import '../css/comments.css';
 const Comments = ({ article_id }) => {
 	const user = UserContext._currentValue;
-	const [newComment, setNewComment] = useState('');
 	const [comments, setComments] = useState([]);
+	const [newComment, setNewComment] = useState({
+		author: user,
+		body: '',
+	});
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
-
-		addCommentToArticle(article_id, newComment, user).then(({ data }) => {
-			console.log(data);
+		const date = new Date(Date.now()).toISOString();
+		setComments((currComments) => {
+			const commentToAdd = { ...newComment };
+			commentToAdd.created_at = date;
+			commentToAdd.comment_id = 0;
+			commentToAdd.votes = 0;
+			return [commentToAdd, ...currComments];
 		});
-	};
+		addCommentToArticle(article_id, newComment).catch;
+		// setNewComment((currComment) => {
+		// 	const updatedComment = { ...currComment };
+		// 	updatedComment.created_at = date;
+		// 	return updatedComment;
+		// }).then(() => setComments([newComment, ...comments]));
+	};;
 
 	useEffect(() => {
 		getCommentsById(article_id).then((commentsFromApi) => {
 			setComments(commentsFromApi);
+			console.log(comments[0]);
 		});
-	}, []);
+	}, [article_id]);
+
 	return (
 		<section className='comments'>
 			<h2 className='section-tit'>
@@ -32,16 +48,26 @@ const Comments = ({ article_id }) => {
 							<span className='comment-author'>{comment.author}</span>
 							<span className='comment-date'>{formatDate(comment.created_at)}</span>
 							<p className='comment-body'>{comment.body}</p>
-							{/* <p className='comment-votes'>{comment.votes}</p> */}
+							<p className='comment-votes'>{comment.votes}</p>
 						</li>
 					);
 				})}
 			</ul>
 			<form onSubmit={handleSubmit}>
-				<textarea placeholder='Write a comment' value={newComment} onChange={(event) => setNewComment(event.target.value)}></textarea>
+				<textarea
+					placeholder='Write a comment'
+					value={newComment.body}
+					onChange={(event) => {
+						setNewComment((currComment) => {
+							const updatedComment = { ...currComment };
+							updatedComment.body = event.target.value;
+							return updatedComment;
+						});
+					}}
+				></textarea>
 				<button type='submit'>Add</button>
 			</form>
 		</section>
 	);
-};
+};;;
 export default Comments;
