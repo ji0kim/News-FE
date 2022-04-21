@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticleById, patchIncDecVote, getCommentsById } from '../utils/api';
+import { getArticleById, patchIncDecVote } from '../utils/api';
 import { formatDate } from '../utils/utils';
 import '../index.css';
 import Comments from './Comments';
@@ -10,7 +10,6 @@ const Article = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [vote, setVote] = useState(0);
 	const [voteClickNum, setVoteClickNum] = useState(0);
-	const [comments, setComments] = useState([]);
 
 	const { article_id } = useParams();
 
@@ -38,12 +37,6 @@ const Article = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		getCommentsById(article_id).then((commentsFromApi) => {
-			setComments(commentsFromApi);
-		});
-	}, []);
-
 	if (isLoading) {
 		return <p>Loading</p>;
 	}
@@ -64,7 +57,7 @@ const Article = () => {
 				</button>
 				<span className='article-page__votes'>{vote + voteClickNum}</span>
 			</section>
-			<Comments comments={comments} article_id={article.article_id}></Comments>
+			<Comments article_id={article.article_id}></Comments>
 		</>
 	);
 };
