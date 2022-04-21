@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getArticleById, patchIncDecVote, getCommentsById } from '../utils/api';
+import { formatDate } from '../utils/utils';
 import '../index.css';
 import Comments from './Comments';
 
@@ -53,7 +54,7 @@ const Article = () => {
 				<p className='article-page__author'>
 					<span>by</span> {article.author}
 				</p>
-				<span className='article-page__date'>{article.created_at}</span>
+				<span className='article-page__date'>{formatDate(article.created_at)}</span>
 				<p>{article.body}</p>
 				<span className='article-page__topic'>{article.topic}</span>
 			</section>
