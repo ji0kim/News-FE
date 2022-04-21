@@ -20,8 +20,12 @@ export const getArticlesByTopics = (topic) => {
 		});
 };
   
-  export const getArticleById = (article_id) => {
-		return articlesApi.get(`/articles/${article_id}`).then(({ data }) => {
-			return data.article;
-		});
-	};
+export const getArticleById = (article_id) => {
+	return articlesApi.get(`/articles/${article_id}`).then(({ data }) => {
+		return data.article;
+	});
+};
+
+export const patchIncDecVote = (article_id, voteClickNum) => {
+	return articlesApi.patch(`/articles/${article_id}`, { inc_votes: voteClickNum });
+};
