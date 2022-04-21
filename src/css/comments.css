@@ -1,0 +1,25 @@
+
+.comments {
+  margin-top: 2em;
+}
+
+.comment{
+  padding:1em;
+  border-top: 1px solid #dedede;
+}
+.count-num {
+  display: inline-block;
+  margin-left: .3em;
+  color: #00c3bd;
+}
+.comment-author, .comment-date{
+font-size: .9em;
+}
+
+.comment-date {
+  margin-left: .8em;
+  color: #999999;
+}
+.comment-body {
+  margin-top: 1em;
+}
