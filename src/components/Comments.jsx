@@ -3,6 +3,7 @@ import { UserContext } from '../App';
 import { formatDate } from '../utils/utils';
 import { addCommentToArticle, getCommentsById } from '../utils/api';
 import '../css/comments.css';
+
 const Comments = ({ article_id }) => {
 	const user = UserContext._currentValue;
 	const [comments, setComments] = useState([]);
@@ -21,13 +22,8 @@ const Comments = ({ article_id }) => {
 			commentToAdd.votes = 0;
 			return [commentToAdd, ...currComments];
 		});
-		addCommentToArticle(article_id, newComment).catch;
-		// setNewComment((currComment) => {
-		// 	const updatedComment = { ...currComment };
-		// 	updatedComment.created_at = date;
-		// 	return updatedComment;
-		// }).then(() => setComments([newComment, ...comments]));
-	};;
+		addCommentToArticle(article_id, newComment);
+	};
 
 	useEffect(() => {
 		getCommentsById(article_id).then((commentsFromApi) => {
