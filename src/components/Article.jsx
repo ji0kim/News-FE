@@ -35,7 +35,7 @@ const Article = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [article_id]);
 
 	if (isLoading) {
 		return <p>Loading</p>;
