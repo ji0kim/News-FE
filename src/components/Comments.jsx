@@ -12,7 +12,6 @@ const Comments = ({ article_id }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (newComment.body.length <= 0) return;
-
 		const date = new Date(Date.now()).toISOString();
 
 		setComments((currComments) => {
@@ -22,18 +21,25 @@ const Comments = ({ article_id }) => {
 			commentToAdd.votes = 0;
 			return [commentToAdd, ...currComments];
 		});
-    
+
 		addCommentToArticle(article_id, newComment).catch((err) => {
 			console.log(err.response.data.msg);
 		});
-    
-    setNewComment({ author: user, body: '' });
+
+		setNewComment({ author: user, body: '' });
+	};
+
+	const handleChange = (event) => {
+		setNewComment((currComment) => {
+			const updatedComment = { ...currComment };
+			updatedComment.body = event.target.value;
+			return updatedComment;
+		});
 	};
 
 	useEffect(() => {
 		getCommentsById(article_id).then((commentsFromApi) => {
 			setComments(commentsFromApi);
-			console.log(comments[0]);
 		});
 	}, [article_id]);
 
@@ -42,6 +48,10 @@ const Comments = ({ article_id }) => {
 			<h2 className='section-tit'>
 				Comments<span className='count-num'>{comments.length}</span>
 			</h2>
+			<form onSubmit={handleSubmit}>
+				<textarea placeholder='Write a comment' value={newComment.body} required onChange={(event) => handleChange(event)} />
+				<button type='submit'>Add</button>
+			</form>
 			<ul>
 				{comments.map((comment) => {
 					return (
