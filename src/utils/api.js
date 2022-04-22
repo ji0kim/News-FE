@@ -10,14 +10,31 @@ export const getTopics = () => {
 	});
 };
 
-export const getArticlesByTopics = (topic) => {
-	return articlesApi
-		.get(`/articles`, {
-			params: { topic },
-		})
-		.then(({ data }) => {
-			return data.articles;
-		});
+export const getArticles = (topic, filter, order) => {
+	if (topic) {
+		return articlesApi
+			.get(`/articles`, {
+				params: {
+					topic,
+					sort_by: filter,
+					order_by: order,
+				},
+			})
+			.then(({ data }) => {
+				return data.articles;
+			});
+	} else {
+		return articlesApi
+			.get(`/articles`, {
+				params: {
+					sort_by: filter,
+					order_by: order,
+				},
+			})
+			.then(({ data }) => {
+				return data.articles;
+			});
+	}
 };
   
 export const getArticleById = (article_id) => {
@@ -34,4 +51,14 @@ export const getCommentsById = (article_id) => {
 	return articlesApi.get(`/articles/${article_id}/comments`).then(({ data }) => {
 		return data.comments;
 	});
+};
+export const addCommentToArticle = (article_id, newComment) => {
+	return articlesApi
+		.post(`/articles/${article_id}/comments`, {
+			username: newComment.author,
+			body: newComment.body,
+		})
+		.then(({ data }) => {
+			console.log(data);
+		});
 };
