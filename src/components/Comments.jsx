@@ -23,10 +23,10 @@ const Comments = ({ article_id }) => {
 	const handleDelete = (comment_id) => {
 		setComments((currComments) => {
 			const commentsCopy = [...currComments];
-			const commentRemoved = commentsCopy.filter((comment) => {
+			const filteredComments = commentsCopy.filter((comment) => {
 				return comment.comment_id !== comment_id;
 			});
-			return commentRemoved;
+			return filteredComments;
 		});
 		deleteComment(comment_id).catch((err) => err.response.data.msg);
 	};
