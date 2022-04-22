@@ -48,3 +48,7 @@ export const addCommentToArticle = (article_id, newComment) => {
 			console.log(data);
 		});
 };
+
+export const deleteComment = (comment_id) => {
+	return articlesApi.delete(`/comments/${comment_id}`);
+};

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { UserContext } from '../App';
 import { formatDate } from '../utils/utils';
-import { addCommentToArticle, getCommentsById } from '../utils/api';
+import { addCommentToArticle, getCommentsById, deleteComment } from '../utils/api';
 import '../css/comments.css';
 
 const Comments = ({ article_id }) => {
@@ -20,7 +20,7 @@ const Comments = ({ article_id }) => {
 		});
 	};
 
-  const handleDelete = (comment_id) => {
+	const handleDelete = (comment_id) => {
 		setComments((currComments) => {
 			const commentsCopy = [...currComments];
 			const commentRemoved = commentsCopy.filter((comment) => {
@@ -28,6 +28,7 @@ const Comments = ({ article_id }) => {
 			});
 			return commentRemoved;
 		});
+		deleteComment(comment_id).catch((err) => err.response.data.msg);
 	};
 
 	const handleSubmit = (event) => {
@@ -53,7 +54,6 @@ const Comments = ({ article_id }) => {
 	useEffect(() => {
 		getCommentsById(article_id).then((commentsFromApi) => {
 			setComments(commentsFromApi);
-			console.log(comments[0]);
 		});
 	}, [article_id]);
 
