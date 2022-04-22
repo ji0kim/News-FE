@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom';
 const Articles = () => {
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [order, setOrder] = useState('asc');
+	const [order, setOrder] = useState('desc');
 	const [filter, setFilter] = useState('created_at');
 	const { topic } = useParams();
-	const filters = ['comment_count', 'votes', 'created_at'];
+	const filters = ['created_at', 'comment_count', 'votes'];
 
 	useEffect(() => {
 		getArticles(topic, filter, order).then((articlesFromApi) => {

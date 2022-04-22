@@ -12,6 +12,7 @@ const ArticleCard = ({ article }) => {
 				<span className='article-card__date'>{article.created_at.match(/([0-9]){4}\-([0-9]){2}\-([0-9]){2}/)[0]}</span>
 			</p>
 			<p className='article-card__vote'>{article.votes}</p>
+			<p className='article-card__comment'>comments {article.comment_count}</p>
 		</Link>
 	);
 };
