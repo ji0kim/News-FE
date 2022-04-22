@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { UserContext } from '../App';
 import { formatDate } from '../utils/utils';
-import { addCommentToArticle, getCommentsById } from '../utils/api';
+import { addCommentToArticle, getCommentsById, deleteComment } from '../utils/api';
 import '../css/comments.css';
 
 const Comments = ({ article_id }) => {
@@ -20,6 +20,17 @@ const Comments = ({ article_id }) => {
 		});
 	};
 
+	const handleDelete = (comment_id) => {
+		setComments((currComments) => {
+			const commentsCopy = [...currComments];
+			const filteredComments = commentsCopy.filter((comment) => {
+				return comment.comment_id !== comment_id;
+			});
+			return filteredComments;
+		});
+		deleteComment(comment_id).catch((err) => err.response.data.msg);
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (newComment.body.length <= 0) return;
@@ -33,9 +44,17 @@ const Comments = ({ article_id }) => {
 			return [commentToAdd, ...currComments];
 		});
 
-		addCommentToArticle(article_id, newComment).catch((err) => {
-			console.log(err.response.data.msg);
-		});
+		addCommentToArticle(article_id, newComment)
+			.then(({ comment }) => {
+				setComments((currComments) => {
+					const currCommentsCopy = [...currComments];
+					currCommentsCopy[0].comment_id = comment.comment_id;
+					return currCommentsCopy;
+				});
+			})
+			.catch((err) => {
+				console.log(err.response.data.msg);
+			});
 
 		setNewComment({ author: user, body: '' });
 	};
@@ -43,7 +62,6 @@ const Comments = ({ article_id }) => {
 	useEffect(() => {
 		getCommentsById(article_id).then((commentsFromApi) => {
 			setComments(commentsFromApi);
-			console.log(comments[0]);
 		});
 	}, [article_id]);
 
@@ -64,6 +82,7 @@ const Comments = ({ article_id }) => {
 							<span className='comment-date'>{formatDate(comment.created_at)}</span>
 							<p className='comment-body'>{comment.body}</p>
 							<p className='comment-votes'>{comment.votes}</p>
+							{user === comment.author && <button onClick={(event) => handleDelete(comment.comment_id)}>delete</button>}
 						</li>
 					);
 				})}
