@@ -83,7 +83,7 @@ const Comments = ({ article_id }) => {
 							<span className='comment-author'>{comment.author}</span>
 							<span className='comment-date'>{formatDate(comment.created_at)}</span>
 							<p className='comment-body'>{comment.body}</p>
-							<Vote votes={comment.votes}></Vote>
+							<Vote votes={comment.votes} comment_id={comment.comment_id}></Vote>
 							{user === comment.author && <button onClick={(event) => handleDelete(comment.comment_id)}>delete</button>}
 						</li>
 					);

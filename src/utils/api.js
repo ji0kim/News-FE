@@ -52,3 +52,7 @@ export const addCommentToArticle = (article_id, newComment) => {
 export const deleteComment = (comment_id) => {
 	return articlesApi.delete(`/comments/${comment_id}`);
 };
+
+export const patchIncDecCommentVote = (optimisticVote, comment_id) => {
+	return articlesApi.patch(`/comments/${comment_id}`, { inc_votes: optimisticVote });
+};
