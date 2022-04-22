@@ -12,10 +12,17 @@ const Comments = ({ article_id }) => {
 		body: '',
 	});
 
+	const handleChange = (event) => {
+		setNewComment((currComment) => {
+			const updatedComment = { ...currComment };
+			updatedComment.body = event.target.value;
+			return updatedComment;
+		});
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (newComment.body.length <= 0) return;
-
 		const date = new Date(Date.now()).toISOString();
 
 		setComments((currComments) => {
@@ -25,10 +32,12 @@ const Comments = ({ article_id }) => {
 			commentToAdd.votes = 0;
 			return [commentToAdd, ...currComments];
 		});
+    
 		addCommentToArticle(article_id, newComment).catch((err) => {
 			console.log(err.response.data.msg);
 		});
-    setNewComment({ author: user, body: '' });
+    
+		setNewComment({ author: user, body: '' });
 	};
 
 	useEffect(() => {
@@ -44,17 +53,7 @@ const Comments = ({ article_id }) => {
 				Comments<span className='count-num'>{comments.length}</span>
 			</h2>
 			<form onSubmit={handleSubmit}>
-				<textarea
-					placeholder='Write a comment'
-					value={newComment.body}
-					onChange={(event) => {
-						setNewComment((currComment) => {
-							const updatedComment = { ...currComment };
-							updatedComment.body = event.target.value;
-							return updatedComment;
-						});
-					}}
-				></textarea>
+				<textarea placeholder='Write a comment' value={newComment.body} required onChange={(event) => handleChange(event)}></textarea>
 				<button type='submit'>Add</button>
 			</form>
 			<ul>
@@ -72,4 +71,5 @@ const Comments = ({ article_id }) => {
 		</section>
 	);
 };
+
 export default Comments;
