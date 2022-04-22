@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
+import { UserContext } from '../App';
 import { formatDate } from '../utils/utils';
+import { addCommentToArticle, getCommentsById } from '../utils/api';
 import '../css/comments.css';
 
 const Comments = ({ article_id }) => {
@@ -8,6 +11,14 @@ const Comments = ({ article_id }) => {
 		author: user,
 		body: '',
 	});
+
+	const handleChange = (event) => {
+		setNewComment((currComment) => {
+			const updatedComment = { ...currComment };
+			updatedComment.body = event.target.value;
+			return updatedComment;
+		});
+	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -29,17 +40,10 @@ const Comments = ({ article_id }) => {
 		setNewComment({ author: user, body: '' });
 	};
 
-	const handleChange = (event) => {
-		setNewComment((currComment) => {
-			const updatedComment = { ...currComment };
-			updatedComment.body = event.target.value;
-			return updatedComment;
-		});
-	};
-
 	useEffect(() => {
 		getCommentsById(article_id).then((commentsFromApi) => {
 			setComments(commentsFromApi);
+			console.log(comments[0]);
 		});
 	}, [article_id]);
 
@@ -49,7 +53,7 @@ const Comments = ({ article_id }) => {
 				Comments<span className='count-num'>{comments.length}</span>
 			</h2>
 			<form onSubmit={handleSubmit}>
-				<textarea placeholder='Write a comment' value={newComment.body} required onChange={(event) => handleChange(event)} />
+				<textarea placeholder='Write a comment' value={newComment.body} required onChange={(event) => handleChange(event)}></textarea>
 				<button type='submit'>Add</button>
 			</form>
 			<ul>
@@ -59,7 +63,7 @@ const Comments = ({ article_id }) => {
 							<span className='comment-author'>{comment.author}</span>
 							<span className='comment-date'>{formatDate(comment.created_at)}</span>
 							<p className='comment-body'>{comment.body}</p>
-							{/* <p className='comment-votes'>{comment.votes}</p> */}
+							<p className='comment-votes'>{comment.votes}</p>
 						</li>
 					);
 				})}
@@ -67,4 +71,5 @@ const Comments = ({ article_id }) => {
 		</section>
 	);
 };
+
 export default Comments;

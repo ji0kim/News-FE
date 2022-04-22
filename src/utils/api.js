@@ -52,3 +52,13 @@ export const getCommentsById = (article_id) => {
 		return data.comments;
 	});
 };
+export const addCommentToArticle = (article_id, newComment) => {
+	return articlesApi
+		.post(`/articles/${article_id}/comments`, {
+			username: newComment.author,
+			body: newComment.body,
+		})
+		.then(({ data }) => {
+			console.log(data);
+		});
+};
