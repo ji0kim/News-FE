@@ -45,7 +45,7 @@ export const addCommentToArticle = (article_id, newComment) => {
 			body: newComment.body,
 		})
 		.then(({ data }) => {
-			console.log(data);
+			return data;
 		});
 };
 

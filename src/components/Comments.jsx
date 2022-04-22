@@ -44,9 +44,17 @@ const Comments = ({ article_id }) => {
 			return [commentToAdd, ...currComments];
 		});
 
-		addCommentToArticle(article_id, newComment).catch((err) => {
-			console.log(err.response.data.msg);
-		});
+		addCommentToArticle(article_id, newComment)
+			.then(({ comment }) => {
+				setComments((currComments) => {
+					const currCommentsCopy = [...currComments];
+					currCommentsCopy[0].comment_id = comment.comment_id;
+					return currCommentsCopy;
+				});
+			})
+			.catch((err) => {
+				console.log(err.response.data.msg);
+			});
 
 		setNewComment({ author: user, body: '' });
 	};
