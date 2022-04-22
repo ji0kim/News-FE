@@ -11,32 +11,18 @@ export const getTopics = () => {
 };
 
 export const getArticles = (topic, filter, order) => {
-	if (topic) {
-		return articlesApi
-			.get(`/articles`, {
-				params: {
-					topic,
-					sort_by: filter,
-					order_by: order,
-				},
-			})
-			.then(({ data }) => {
-				return data.articles;
-			});
-	} else {
-		return articlesApi
-			.get(`/articles`, {
-				params: {
-					sort_by: filter,
-					order_by: order,
-				},
-			})
-			.then(({ data }) => {
-				return data.articles;
-			});
-	}
+	return articlesApi
+		.get(`/articles`, {
+			params: {
+				topic,
+				sort_by: filter,
+				order_by: order,
+			},
+		})
+		.then(({ data }) => {
+			return data.articles;
+		});
 };
-  
 export const getArticleById = (article_id) => {
 	return articlesApi.get(`/articles/${article_id}`).then(({ data }) => {
 		return data.article;
