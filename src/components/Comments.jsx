@@ -20,6 +20,16 @@ const Comments = ({ article_id }) => {
 		});
 	};
 
+  const handleDelete = (comment_id) => {
+		setComments((currComments) => {
+			const commentsCopy = [...currComments];
+			const commentRemoved = commentsCopy.filter((comment) => {
+				return comment.comment_id !== comment_id;
+			});
+			return commentRemoved;
+		});
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (newComment.body.length <= 0) return;
@@ -64,6 +74,7 @@ const Comments = ({ article_id }) => {
 							<span className='comment-date'>{formatDate(comment.created_at)}</span>
 							<p className='comment-body'>{comment.body}</p>
 							<p className='comment-votes'>{comment.votes}</p>
+							{user === comment.author && <button onClick={(event) => handleDelete(comment.comment_id)}>delete</button>}
 						</li>
 					);
 				})}
