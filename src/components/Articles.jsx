@@ -24,19 +24,21 @@ const Articles = () => {
 
 	return (
 		<>
-			<select name='filter' onChange={(event) => setFilter(event.target.value)}>
-				{filters.map((filter) => {
-					return (
-						<option key={filter} value={filter}>
-							{filter}
-						</option>
-					);
-				})}
-			</select>
-			<select name='order' onChange={(event) => setOrder(event.target.value)}>
-				<option value='desc'>descending</option>
-				<option value='asc'>asending</option>
-			</select>
+			<form>
+				<select name='filter' value={filter} onChange={(event) => setFilter(event.target.value)}>
+					{filters.map((filter) => {
+						return (
+							<option key={filter} value={filter}>
+								{filter}
+							</option>
+						);
+					})}
+				</select>
+				<select name='order' value={order} onChange={(event) => setOrder(event.target.value)}>
+					<option value='desc'>descending</option>
+					<option value='asc'>asending</option>
+				</select>
+			</form>
 			<ul className='articles'>
 				{articles.map((article) => {
 					return (
