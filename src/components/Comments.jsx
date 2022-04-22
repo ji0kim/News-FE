@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { UserContext } from '../App';
 import { formatDate } from '../utils/utils';
 import { addCommentToArticle, getCommentsById, deleteComment } from '../utils/api';
+import Vote from './Vote';
 import '../css/comments.css';
 
 const Comments = ({ article_id }) => {
 	const user = UserContext._currentValue;
 	const [comments, setComments] = useState([]);
+
 	const [newComment, setNewComment] = useState({
 		author: user,
 		body: '',
@@ -81,7 +83,7 @@ const Comments = ({ article_id }) => {
 							<span className='comment-author'>{comment.author}</span>
 							<span className='comment-date'>{formatDate(comment.created_at)}</span>
 							<p className='comment-body'>{comment.body}</p>
-							<p className='comment-votes'>{comment.votes}</p>
+							<Vote votes={comment.votes}></Vote>
 							{user === comment.author && <button onClick={(event) => handleDelete(comment.comment_id)}>delete</button>}
 						</li>
 					);
