@@ -4,10 +4,12 @@ import { getArticleById, patchIncDecVote } from '../utils/api';
 import { formatDate } from '../utils/utils';
 import '../index.css';
 import Comments from './Comments';
+import Error from './Error';
 
 const Article = () => {
 	const [article, setArticle] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
 	const [vote, setVote] = useState(0);
 	const [voteClickNum, setVoteClickNum] = useState(0);
 
@@ -28,18 +30,24 @@ const Article = () => {
 	useEffect(() => {
 		getArticleById(article_id)
 			.then((articleFromApi) => {
+				setError(null);
 				setArticle(articleFromApi);
 				setIsLoading(false);
 				setVote(articleFromApi.votes);
 			})
 			.catch((err) => {
-				console.log(err);
+				setError(err.response.statusText);
 			});
 	}, [article_id]);
 
 	if (isLoading) {
 		return <p>Loading</p>;
 	}
+
+	if (error) {
+		return <Error errorMsg={error} />;
+	}
+
 	return (
 		<>
 			<section className='article-page'>
@@ -47,12 +55,17 @@ const Article = () => {
 				<p className='article-page__author'>
 					<span>by</span> {article.author}
 				</p>
-				<span className='article-page__date'>{formatDate(article.created_at)}</span>
+				<span className='article-page__date'>
+					{formatDate(article.created_at)}
+				</span>
 				<p>{article.body}</p>
 				<span className='article-page__topic'>{article.topic}</span>
 			</section>
 			<section className='vote'>
-				<button onClick={() => handleVote(article.article_id)} className={voteClickNum > 0 ? ' btn-voted' : 'btn'}>
+				<button
+					onClick={() => handleVote(article.article_id)}
+					className={voteClickNum > 0 ? ' btn-voted' : 'btn'}
+				>
 					+
 				</button>
 				<span className='article-page__votes'>{vote + voteClickNum}</span>

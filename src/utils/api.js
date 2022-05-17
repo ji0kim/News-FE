@@ -1,5 +1,5 @@
 import axios from 'axios';
-  
+
 const articlesApi = axios.create({
 	baseURL: 'https://news-api-j.herokuapp.com/api',
 });
@@ -24,9 +24,9 @@ export const getArticles = (topic, filter, order) => {
 		});
 };
 export const getArticleById = (article_id) => {
-	return articlesApi.get(`/articles/${article_id}`).then(({ data }) => {
-		return data.article;
-	});
+  return articlesApi
+		.get(`/articles/${article_id}`)
+		.then(({ data }) => data.article);
 };
 
 export const patchIncDecVote = (article_id, voteClickNum) => {
