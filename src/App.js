@@ -14,7 +14,7 @@ function App() {
 	return (
 		<UserContext.Provider value={user}>
 			<div className='App'>
-				<Header>NC News</Header>
+				<Header />
 				<Topics></Topics>
 				<main>
 					<Routes>

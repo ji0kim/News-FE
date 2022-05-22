@@ -23,7 +23,7 @@ const Topics = () => {
 	}
 
 	return (
-		<ul>
+		<ul className='topic'>
 			{topics.map(({ slug }) => {
 				return (
 					<li key={slug}>

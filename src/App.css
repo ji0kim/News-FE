@@ -1,3 +1,23 @@
 .App {
   text-align: center;
 }
+.heading {
+  font-family: 'Merriweather', serif;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  padding: 1em
+}
+.topic {
+display: flex;
+justify-content: center;
+margin: 1em 0;
+}
+.topic li{
+  margin : 0 .2em;
+  border-radius: 1em;
+background-color: rgb(96, 67, 67);
+}
+.topic a {
+  color: #fff;
+  padding: 0.15em 0.5em;
+}
